@@ -112,6 +112,78 @@ Portfolio Projects (this website):
   checkout, user auth, and admin dashboard.
 
 ====================
+PORTFOLIO APPS — FEATURE DETAILS
+====================
+
+--- Shopping Concept ---
+A swipe-to-shortlist shopping UX concept inspired by dating-app interactions, built entirely in React.
+
+Catalog:
+- Starts with 30 items. Each item has a name, price (in INR ₹), color (Blue or Red), size (S/M/L), and images.
+
+How swiping works:
+- Swipe right (or drag the card more than 80px to the right) → item is shortlisted (added to Selected Items).
+- Swipe left (or drag the card more than 80px to the left) → item is rejected (added to Rejected Items).
+- The next item is always previewed behind the current card (stacked card UI).
+- An animated "hint wiggle" plays once on first load to show the user how to swipe.
+
+Shortlist Rounds:
+- There is NO hard limit on how many shortlist rounds you can run — you can run as many as you want.
+- After going through all items in a round, click "Re-Pick My Cart" to start a new round.
+- The new round uses only the items you shortlisted in the previous round as the new catalog.
+- This continues until you're happy with your selection, then click "Finalise Cart".
+- In practice, rounds naturally end when you either finalise or have only 1 item left (since selecting it
+  would make the next round a catalog of 1).
+
+Session history:
+- Each completed round is recorded and shown in a scrollable banner at the top.
+- Each history entry shows: Round number, initial item count + total price, selected item count + total price.
+
+Undo:
+- You can undo any item from the Selected or Rejected panels back into the deck at any time.
+
+Buttons:
+- "Re-Pick My Cart" — ends the current round and starts a new one with only selected items.
+- "Finalise Cart" — marks the current selected list as your final cart.
+
+--- HTML to Visual Converter ---
+A live HTML editor + preview tool.
+
+Features:
+- Left panel: a plain-text HTML editor. Type or paste any valid HTML.
+- Right panel: a live iframe that renders the HTML in real time as you type.
+- Comes preloaded with a default HTML template — a 3D rotating glass cube built with pure CSS animations.
+- Copy button: copies the current HTML to the clipboard.
+- Reset button: resets the editor back to the default template.
+- No saving, no backend — purely client-side, runs entirely in the browser.
+
+--- Scrollable Table ---
+A React component solving the classic mobile horizontal-scroll table problem.
+
+Desktop view:
+- Standard scrollable table with full rows and column headers.
+
+Mobile views (two purpose-built alternatives):
+1. Column Navigator view: shows one column at a time with left/right arrow navigation — no horizontal scroll needed.
+2. Row Detail view (infinite scroll): tapping a row expands it into a full detail card showing all field values vertically.
+
+Other features:
+- Theming support: ships with an Apple-style theme preset (clean whites, SF Pro font, subtle separators).
+- Accepts custom theme overrides as a plain object.
+- Demo data uses 5 repetitions of a base dataset to simulate real table volume.
+
+--- Ask About Me ---
+An AI chat assistant embedded in the portfolio.
+
+Features:
+- Chat interface with streaming responses (characters appear one by one, like typing).
+- Powered by OpenRouter API (model: nvidia/nemotron-3-super-120b).
+- Trained on Vamsi's career, skills, projects, and personal info via a system prompt.
+- Falls back to a static answer gracefully if the API key is missing or the API fails.
+- Stop streaming is handled on component unmount to prevent memory leaks.
+- User and assistant messages are visually distinguished with different bubble styles and icons.
+
+====================
 TECHNICAL SKILLS
 ====================
 
