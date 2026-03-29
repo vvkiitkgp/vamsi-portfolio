@@ -1,5 +1,16 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Box, Button, CardActions, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CardActions,
+  Dialog,
+  DialogContent,
+  Divider,
+  Typography,
+} from '@mui/material';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ReplayIcon from '@mui/icons-material/Replay';
 import ShoppingCard from './components/ShoppingCard';
 import SelectionSummary from './components/SelectionSummary';
 import BackButton from '../../components/BackButton';
@@ -32,6 +43,7 @@ const ShoppingConcept = () => {
   const [isHinting, setIsHinting] = useState(false);
   const hintPlayedRef = useRef(false);
   const [sessionPulse, setSessionPulse] = useState(false);
+  const [showFinaliseModal, setShowFinaliseModal] = useState(false);
   const hasHistory = sessionHistory.length > 0;
   const historyListRef = useRef(null);
 
@@ -121,8 +133,18 @@ const ShoppingConcept = () => {
   };
 
   const handleFinalizeCart = () => {
-    // In a real flow, this might trigger a checkout step.
-    // Here it simply keeps the current selected list as the finalized set.
+    setShowFinaliseModal(true);
+  };
+
+  const handleResetCart = () => {
+    setShowFinaliseModal(false);
+    setSession(1);
+    setInitialStagedItems(initialCatalog);
+    setStagedItems(initialCatalog);
+    setSelectedItems([]);
+    setRejectedItems([]);
+    setSessionHistory([]);
+    hintPlayedRef.current = false;
   };
 
   const handleRepickCart = () => {
@@ -608,6 +630,139 @@ const ShoppingConcept = () => {
           </Typography>
         </Box>
       </CardActions>
+
+      <Dialog
+        open={showFinaliseModal}
+        onClose={() => setShowFinaliseModal(false)}
+        PaperProps={{
+          sx: {
+            borderRadius: '20px',
+            px: { xs: 2, sm: 4 },
+            py: 4,
+            maxWidth: 480,
+            width: '100%',
+            textAlign: 'center',
+            boxShadow: '0 24px 60px rgba(0,0,0,0.12)',
+          },
+        }}
+      >
+        <DialogContent sx={{ p: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2.5 }}>
+          <Box
+            sx={{
+              width: 64,
+              height: 64,
+              borderRadius: '50%',
+              backgroundColor: '#F0FDF4',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <CheckCircleOutlineIcon sx={{ fontSize: 36, color: '#16A34A' }} />
+          </Box>
+
+          <Box>
+            <Typography
+              variant="h6"
+              fontWeight={700}
+              sx={{
+                color: '#111827',
+                fontFamily: 'Inter, "SF Pro Text", system-ui, sans-serif',
+                letterSpacing: '-0.015em',
+                mb: 0.75,
+              }}
+            >
+              Your cart is finalised
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: '#6B7280',
+                fontFamily: 'Inter, "SF Pro Text", system-ui, sans-serif',
+                lineHeight: 1.65,
+              }}
+            >
+              You shortlisted{' '}
+              <Box component="span" sx={{ color: '#111827', fontWeight: 600 }}>
+                {selectedItems.length} item{selectedItems.length !== 1 ? 's' : ''}
+              </Box>{' '}
+              across{' '}
+              <Box component="span" sx={{ color: '#111827', fontWeight: 600 }}>
+                {session} round{session !== 1 ? 's' : ''}
+              </Box>
+              . In a real flow, you'd proceed to payment from here.
+            </Typography>
+          </Box>
+
+          <Divider sx={{ width: '100%', borderColor: '#F3F4F6' }} />
+
+          <Box sx={{ width: '100%', backgroundColor: '#F9FAFB', borderRadius: '12px', p: 2, textAlign: 'left' }}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: '#9CA3AF',
+                fontFamily: 'Inter, "SF Pro Text", system-ui, sans-serif',
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em',
+                display: 'block',
+                mb: 0.5,
+              }}
+            >
+              About this demo
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{
+                color: '#4B5563',
+                fontFamily: 'Inter, "SF Pro Text", system-ui, sans-serif',
+                lineHeight: 1.65,
+              }}
+            >
+              This is a concept exploring a more intuitive way to shortlist a cart — swipe-based,
+              iterative, and frictionless. Once you're done shortlisting, the traditional checkout
+              flow takes over seamlessly.
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', gap: 1.5, width: '100%', pt: 0.5 }}>
+            <Button
+              fullWidth
+              variant="outlined"
+              startIcon={<ReplayIcon />}
+              onClick={handleResetCart}
+              sx={{
+                borderRadius: '10px',
+                textTransform: 'none',
+                fontFamily: 'Inter, "SF Pro Text", system-ui, sans-serif',
+                fontWeight: 600,
+                borderColor: '#E5E7EB',
+                color: '#374151',
+                '&:hover': { backgroundColor: '#F9FAFB', borderColor: '#D1D5DB' },
+              }}
+            >
+              Reset Cart
+            </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              startIcon={<ShoppingCartOutlinedIcon />}
+              onClick={() => setShowFinaliseModal(false)}
+              sx={{
+                borderRadius: '10px',
+                textTransform: 'none',
+                fontFamily: 'Inter, "SF Pro Text", system-ui, sans-serif',
+                fontWeight: 600,
+                backgroundColor: '#111827',
+                boxShadow: '0 8px 18px rgba(17,24,39,0.18)',
+                '&:hover': { backgroundColor: '#0F1620' },
+              }}
+            >
+              Proceed to Payment
+            </Button>
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
