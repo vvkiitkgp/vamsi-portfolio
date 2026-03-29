@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Box } from '@mui/material';
 import { ScrollTrackSVG } from './ScrollTrackSVG';
-import investmentPortfolioApp from '../../assets/investment-portfolio-app.webp';
 import { Infocard } from '../InfoCard';
 import AnimatedOnVisible from '../AnimateOnVisible';
 
@@ -24,9 +23,10 @@ const Card = ({ data }) => {
       observer.observe(cardRef.current);
     }
 
+    const currentCard = cardRef.current;
     return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
+      if (currentCard) {
+        observer.unobserve(currentCard);
       }
     };
   }, []);
@@ -79,6 +79,7 @@ const Card = ({ data }) => {
         window.removeEventListener('scroll', handleScroll);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   return (

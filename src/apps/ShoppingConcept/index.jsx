@@ -94,7 +94,7 @@ const ShoppingConcept = () => {
 
     const startDelay = 200;
     const duration = 1000;
-    const startTimer = setTimeout(() => {
+    setTimeout(() => {
       setIsHinting(true);
       const stopTimer = setTimeout(() => {
         setIsHinting(false);

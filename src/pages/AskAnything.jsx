@@ -13,7 +13,6 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { openai } from '../lib/openai';
 import { ABOUT_ME_CONTEXT } from '../lib/aboutMePrompt';
 import BackButton from '../components/BackButton';
 
