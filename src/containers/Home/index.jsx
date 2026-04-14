@@ -1,12 +1,13 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import homePageInfoMock from '../../mock/homePageInfoMock';
+import { Box, CircularProgress } from '@mui/material';
 import { HomePageSectionHeading } from '../../components/HomePageSectionHeading';
 import AboutMe from '../../components/AboutMe';
 import { CardV2 } from '../../components/Card/CardV2';
-
+import { useProjects } from '../../hooks/useProjects';
 
 export const Home = () => {
+  const { data, loading } = useProjects();
+
   return (
     <Box sx={{ bgcolor: '#fff' }}>
 
@@ -30,22 +31,40 @@ export const Home = () => {
           gap: 4,
         }}
       >
-        <HomePageSectionHeading heading="AI Integrated Projects" />
-        <CardV2 data={homePageInfoMock.askAboutMe} />
-        <CardV2 data={homePageInfoMock.aiDrivenWebapp} />
-        {/* <HomePageSectionHeading heading="Clones" />
-        <CardV2 data={homePageInfoMock.facebookClone} />
-        <CardV2 data={homePageInfoMock.amazonClone} />
-        <HomePageSectionHeading heading="Proof of Concepts (POC)" />
-        <CardV2 data={homePageInfoMock.clickDaily} />
-        <CardV2 data={homePageInfoMock.listenWhatIListen} /> */}
-        <HomePageSectionHeading heading="E-Commerce" />
-        <CardV2 data={homePageInfoMock.jewelleryStore} />
-        <HomePageSectionHeading heading="Simple Function Projects" />
-        <CardV2 data={homePageInfoMock.HtmlToVisualConverter} />
-        <CardV2 data={homePageInfoMock.reactForms} />
-        <CardV2 data={homePageInfoMock.shoppingConcept} />
-        <CardV2 data={homePageInfoMock.scrollableTable} />
+        {loading ? (
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            {data?.ai?.length > 0 && (
+              <>
+                <HomePageSectionHeading heading="AI Integrated Projects" />
+                {data.ai.map((project, i) => (
+                  <CardV2 key={project.heading + i} data={project} />
+                ))}
+              </>
+            )}
+
+            {data?.ecommerce?.length > 0 && (
+              <>
+                <HomePageSectionHeading heading="E-Commerce" />
+                {data.ecommerce.map((project, i) => (
+                  <CardV2 key={project.heading + i} data={project} />
+                ))}
+              </>
+            )}
+
+            {data?.simple?.length > 0 && (
+              <>
+                <HomePageSectionHeading heading="Simple Function Projects" />
+                {data.simple.map((project, i) => (
+                  <CardV2 key={project.heading + i} data={project} />
+                ))}
+              </>
+            )}
+          </>
+        )}
       </Box>
 
     </Box>

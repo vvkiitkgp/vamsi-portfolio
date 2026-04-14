@@ -22,7 +22,7 @@ const placeholderImages = Array(10).fill(
 const initialCatalog = Array.from({ length: 30 }, (_, idx) => ({
   id: idx + 1,
   name: `Item ${idx + 1}`,
-  price: 30000 + idx * 10,
+  price: Math.floor(Math.random() * 9000) + 1000,
   color: idx % 2 === 0 ? 'Blue' : 'Red',
   size: ['S', 'M', 'L'][idx % 3],
   images: placeholderImages,
@@ -646,7 +646,15 @@ const ShoppingConcept = () => {
           },
         }}
       >
-        <DialogContent sx={{ p: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2.5 }}>
+        <DialogContent
+          sx={{
+            p: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2.5,
+          }}
+        >
           <Box
             sx={{
               width: 64,
@@ -684,7 +692,8 @@ const ShoppingConcept = () => {
             >
               You shortlisted{' '}
               <Box component="span" sx={{ color: '#111827', fontWeight: 600 }}>
-                {selectedItems.length} item{selectedItems.length !== 1 ? 's' : ''}
+                {selectedItems.length} item
+                {selectedItems.length !== 1 ? 's' : ''}
               </Box>{' '}
               across{' '}
               <Box component="span" sx={{ color: '#111827', fontWeight: 600 }}>
@@ -696,7 +705,15 @@ const ShoppingConcept = () => {
 
           <Divider sx={{ width: '100%', borderColor: '#F3F4F6' }} />
 
-          <Box sx={{ width: '100%', backgroundColor: '#F9FAFB', borderRadius: '12px', p: 2, textAlign: 'left' }}>
+          <Box
+            sx={{
+              width: '100%',
+              backgroundColor: '#F9FAFB',
+              borderRadius: '12px',
+              p: 2,
+              textAlign: 'left',
+            }}
+          >
             <Typography
               variant="caption"
               sx={{
@@ -719,9 +736,9 @@ const ShoppingConcept = () => {
                 lineHeight: 1.65,
               }}
             >
-              This is a concept exploring a more intuitive way to shortlist a cart — swipe-based,
-              iterative, and frictionless. Once you're done shortlisting, the traditional checkout
-              flow takes over seamlessly.
+              This is a concept exploring a more intuitive way to shortlist a
+              cart — swipe-based, iterative, and frictionless. Once you're done
+              shortlisting, the traditional checkout flow takes over seamlessly.
             </Typography>
           </Box>
 
@@ -738,7 +755,10 @@ const ShoppingConcept = () => {
                 fontWeight: 600,
                 borderColor: '#E5E7EB',
                 color: '#374151',
-                '&:hover': { backgroundColor: '#F9FAFB', borderColor: '#D1D5DB' },
+                '&:hover': {
+                  backgroundColor: '#F9FAFB',
+                  borderColor: '#D1D5DB',
+                },
               }}
             >
               Reset Cart

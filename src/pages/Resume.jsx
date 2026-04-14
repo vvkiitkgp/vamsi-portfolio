@@ -3,11 +3,14 @@ import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import DownloadIcon from '@mui/icons-material/Download';
 import { useNavigate } from 'react-router-dom';
+import { useAboutMe } from '../hooks/useAboutMe';
 
-const resumeSrc = '/March%202026%20V2%20Resume.pdf';
+const FALLBACK_RESUME = '/March%202026%20V2%20Resume.pdf';
 
 const Resume = () => {
   const navigate = useNavigate();
+  const { data } = useAboutMe();
+  const resumeSrc = data.resumeUrl || FALLBACK_RESUME;
 
   return (
     <Box

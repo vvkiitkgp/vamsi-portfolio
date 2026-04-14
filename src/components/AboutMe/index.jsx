@@ -5,6 +5,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useNavigate } from 'react-router-dom';
+import { useAboutMe } from '../../hooks/useAboutMe';
 
 const FONT = 'Inter, "SF Pro Text", "SF Pro Display", -apple-system, system-ui, sans-serif';
 
@@ -16,6 +17,8 @@ const actionItems = [
 
 export const AboutMe = () => {
   const navigate = useNavigate();
+  const { data } = useAboutMe();
+  const photoSrc = data.photoUrl || vvkProfilePhoto;
 
   return (
     <Box sx={{ height: '100vh', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center' }}>
@@ -49,8 +52,8 @@ export const AboutMe = () => {
       >
         <Box
           component="img"
-          src={vvkProfilePhoto}
-          alt="Vamsi Vinay Kumar"
+          src={photoSrc}
+          alt={data.name}
           sx={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
         />
       </Box>
@@ -73,8 +76,8 @@ export const AboutMe = () => {
         <Box sx={{ display: { xs: 'flex', md: 'none' }, justifyContent: 'center', mb: 0.5 }}>
           <Box
             component="img"
-            src={vvkProfilePhoto}
-            alt="Vamsi Vinay Kumar"
+            src={photoSrc}
+            alt={data.name}
             sx={{
               width: 175,
               height: 175,
@@ -95,7 +98,7 @@ export const AboutMe = () => {
           letterSpacing: { xs: 4, md: 6 },
           fontWeight: 400,
         }}>
-          hello!
+          {data.greeting}
         </Typography>
 
         {/* Name */}
@@ -110,7 +113,7 @@ export const AboutMe = () => {
             letterSpacing: '-0.025em',
           }}
         >
-          I'm Vamsi
+          {data.name}
         </Typography>
 
         {/* Role */}
@@ -121,7 +124,7 @@ export const AboutMe = () => {
           letterSpacing: { xs: 2, md: 4 },
           fontWeight: 500,
         }}>
-          ui developer · react
+          {data.role}
         </Typography>
 
         {/* Short bio */}
@@ -133,10 +136,7 @@ export const AboutMe = () => {
           maxWidth: { xs: '100%', md: 480 },
           mt: 0,
         }}>
-          Senior Frontend Engineer with 6+ years in React, TypeScript &amp; GraphQL.
-          Started at Standard Chartered Bank architecting corporate banking
-          migrations, then moved to SigFig leading teams that ship LLM-powered
-          financial features. IIT Kharagpur grad — Cursor &amp; Claude are my daily tools.
+          {data.bio}
         </Typography>
 
         {/* Action pills */}
