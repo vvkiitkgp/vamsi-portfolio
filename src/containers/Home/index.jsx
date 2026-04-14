@@ -32,6 +32,7 @@ export const Home = () => {
       >
         <HomePageSectionHeading heading="AI Integrated Projects" />
         <CardV2 data={homePageInfoMock.askAboutMe} />
+        <CardV2 data={homePageInfoMock.aiDrivenWebapp} />
         {/* <HomePageSectionHeading heading="Clones" />
         <CardV2 data={homePageInfoMock.facebookClone} />
         <CardV2 data={homePageInfoMock.amazonClone} />

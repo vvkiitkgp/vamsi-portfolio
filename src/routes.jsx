@@ -17,6 +17,7 @@ import Contact from './pages/Contact';
 import AskAnything from './pages/AskAnything';
 import JewelleryStore from './pages/JewelleryStore';
 import ScrollableTable from './apps/ScrollableTable';
+import AiDrivenWebapp from './pages/AiDrivenWebapp';
 import { Box } from '@mui/material';
 
 const ScrollToTop = () => {
@@ -48,6 +49,7 @@ function AppRoutes() {
           <Route path="/ask-anything" element={<AskAnything />} />
           <Route path="/jewellery-store" element={<JewelleryStore />} />
           <Route path="/scrollable-table" element={<ScrollableTable />} />
+          <Route path="/ai-driven-webapp" element={<AiDrivenWebapp />} />
         </Routes>
       </Box>
     </Router>

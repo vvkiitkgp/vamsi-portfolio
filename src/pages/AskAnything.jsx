@@ -1,3 +1,4 @@
+import Anthropic from '@anthropic-ai/sdk';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Box,
@@ -82,46 +83,30 @@ const AskAnything = () => {
     setInput('');
     setIsStreaming(true);
 
-    const apiKey = process.env.REACT_APP_OPENAI_KEY;
+    const apiKey = process.env.REACT_APP_CLAUDE_KEY;
     if (!apiKey) {
       streamAnswer(fallbackAnswer);
       return;
     }
 
     try {
-      const resp = await fetch(
-        'https://openrouter.ai/api/v1/chat/completions',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'xiaomi/mimo-v2-flash:free',
-            messages: [
-              { role: 'system', content: ABOUT_ME_CONTEXT },
-              { role: 'user', content: trimmed },
-            ],
-            reasoning: { enabled: true },
-          }),
-        }
-      );
+      const client = new Anthropic({
+        apiKey,
+        dangerouslyAllowBrowser: true,
+      });
 
-      if (!resp.ok) {
-        throw new Error(`OpenRouter error: ${resp.status}`);
-      }
+      const msg = await client.messages.create({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 1024,
+        system: ABOUT_ME_CONTEXT,
+        messages: [{ role: 'user', content: trimmed }],
+      });
 
-      const data = await resp.json();
-      const answer =
-        data?.choices?.[0]?.message?.content?.[0]?.text ||
-        data?.choices?.[0]?.message?.content ||
-        fallbackAnswer;
-
-      streamAnswer(Array.isArray(answer) ? answer.join('\n') : answer);
+      const answer = msg.content[0].text || fallbackAnswer;
+      streamAnswer(answer);
     } catch (err) {
-      console.error(err);
-      streamAnswer('Sorry, something went wrong.');
+      console.error('handleSend error:', err);
+      streamAnswer(`Sorry, something went wrong. (${err.message})`);
     }
   };
 
@@ -210,7 +195,7 @@ const AskAnything = () => {
           </Box>
         );
       }),
-    [messages]
+    [messages],
   );
 
   return (

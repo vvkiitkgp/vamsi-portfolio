@@ -13,6 +13,13 @@ export const homePageInfoMock = {
     path: '/ask-anything',
     isDeveloped: true,
   },
+  aiDrivenWebapp: {
+    heading: 'AI Driven Webapp',
+    info: 'An AI-powered web application leveraging modern language models to deliver intelligent, dynamic user experiences.',
+    imageUrl: null,
+    path: '/ai-driven-webapp',
+    isDeveloped: true,
+  },
   facebookClone: {
     heading: 'Facebook Clone',
     info: ' This app uses open AI API, and suggests a portfolio to invest from a portfolio list provided, Based on the latest news.',
