@@ -77,7 +77,7 @@ export function useProjects() {
     let cancelled = false
 
     sanityClient
-      .fetch(QUERY)
+      ?.fetch(QUERY)
       .then((docs) => {
         if (!cancelled) {
           setData(groupBySection(docs))

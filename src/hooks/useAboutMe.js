@@ -31,7 +31,7 @@ export function useAboutMe() {
     let cancelled = false
 
     sanityClient
-      .fetch(QUERY)
+      ?.fetch(QUERY)
       .then((doc) => {
         if (!cancelled && doc) {
           setData({
