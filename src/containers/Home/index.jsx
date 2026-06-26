@@ -5,6 +5,7 @@ import AboutMe from '../../components/AboutMe';
 import NavBar from '../../components/NavBar';
 import ProjectCard from '../../components/ProjectCard';
 import SkillsSection from '../../components/SkillsSection';
+import ExperienceSection from '../../components/ExperienceSection';
 import Fotter from '../../components/Fotter';
 import { useProjects } from '../../hooks/useProjects';
 
@@ -72,6 +73,10 @@ export const Home = () => {
         {/* Skills first — "what I know" before "what I've built" */}
         <Box id="skills" sx={{ scrollMarginTop: 80 }}>
           <SkillsSection />
+        </Box>
+
+        <Box id="experience" sx={{ scrollMarginTop: 80 }}>
+          <ExperienceSection />
         </Box>
 
         {loading ? (

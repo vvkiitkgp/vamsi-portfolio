@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import TerminalIcon from '@mui/icons-material/Terminal';
+import BusinessCenterOutlinedIcon from '@mui/icons-material/BusinessCenterOutlined';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import DescriptionIcon from '@mui/icons-material/Description';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -13,11 +14,12 @@ const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif";
 
 const WORD_MARK = 'Vamsi Vinay Kumar';
 
-// Order mirrors the page flow: Home → Skills → Projects, then the route links.
+// Order mirrors the page flow: Home → Skills → Experience → Projects, then the route links.
 // `section` ties an item to a homepage anchor for scroll-spy highlighting.
 const navItems = [
   { label: 'Home', Icon: HomeOutlinedIcon, scrollTop: true, section: 'home' },
   { label: 'Skills', Icon: TerminalIcon, target: 'skills', section: 'skills' },
+  { label: 'Experience', Icon: BusinessCenterOutlinedIcon, target: 'experience', section: 'experience' },
   { label: 'Projects', Icon: WorkOutlineIcon, target: 'projects', section: 'projects' },
   { label: 'Resume', Icon: DescriptionIcon, path: '/resume' },
   { label: 'Contact', Icon: MailOutlineIcon, path: '/contact' },
@@ -35,7 +37,7 @@ export const NavBar = () => {
       setScrolled(window.scrollY > 60);
       const line = 120; // active when a section's top crosses just below the nav
       let current = 'home';
-      for (const id of ['skills', 'projects']) {
+      for (const id of ['skills', 'experience', 'projects']) {
         const el = document.getElementById(id);
         if (el && el.getBoundingClientRect().top <= line) current = id;
       }

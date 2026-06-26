@@ -84,7 +84,6 @@ export const CATEGORIES = [
     name: 'Architecture & AI',
     skills: [
       'System Design',
-      'Design Systems',
       'Micro-frontends',
       'Monorepos',
       'Feature Flags',
