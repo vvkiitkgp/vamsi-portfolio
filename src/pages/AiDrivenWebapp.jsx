@@ -24,7 +24,26 @@ const INITIAL_CODE = `function App() {
   );
 }`;
 
-const buildSrcdoc = (code) => `<!DOCTYPE html>
+// The model sometimes emits `import`/`export` despite the system prompt. React &
+// friends are injected as globals in the iframe, so strip module syntax (it would
+// throw "Cannot use import statement outside a module" in the non-module Function
+// scope) rather than relying on the model to behave.
+const stripModuleSyntax = (code) =>
+  code
+    .replace(/^\s*import\s+[\s\S]*?\s+from\s+['"][^'"]*['"];?[ \t]*$/gm, '') // import x from '...'
+    .replace(/^\s*import\s+['"][^'"]*['"];?[ \t]*$/gm, '') // side-effect import '...'
+    .replace(/^\s*export\s+default\s+/gm, '') // export default App  ->  App
+    .replace(/^\s*export\s+(?=(const|let|var|function|class)\b)/gm, '') // export const/function
+    .trim();
+
+const buildSrcdoc = (rawCode) => {
+  const code = stripModuleSyntax(rawCode);
+  // Embed the code as a JS string literal so a `</script>` inside it can't break
+  // out of the script tag, and so Babel compile errors are catchable rather than
+  // silently aborting the whole frame.
+  const codeLiteral = JSON.stringify(code).replace(/</g, '\\u003c');
+
+  return `<!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -35,17 +54,49 @@ const buildSrcdoc = (code) => `<!DOCTYPE html>
     <style>
       *, *::before, *::after { box-sizing: border-box; }
       body { margin: 0; padding: 0; }
+      #__error {
+        margin: 0; padding: 16px 20px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 13px; line-height: 1.55; color: #b91c1c; background: #fef2f2;
+        border-bottom: 1px solid #fecaca; white-space: pre-wrap; word-break: break-word;
+      }
     </style>
   </head>
   <body>
+    <pre id="__error" style="display:none"></pre>
     <div id="root"></div>
-    <script type="text/babel">
-      ${code}
-      const _root = ReactDOM.createRoot(document.getElementById('root'));
-      _root.render(<App />);
+    <script>
+      (function () {
+        var root = document.getElementById('root');
+        var errBox = document.getElementById('__error');
+        function showError(label, err) {
+          errBox.style.display = 'block';
+          errBox.textContent = label + ': ' + (err && err.message ? err.message : String(err));
+        }
+        // Catch runtime errors thrown after the initial render (e.g. in effects).
+        window.addEventListener('error', function (e) { showError('Runtime error', e.error || e.message); });
+
+        try {
+          var source = ${codeLiteral};
+          // Classic runtime compiles JSX to React.createElement (React is a global here).
+          // The automatic runtime would inject a react/jsx-runtime import, which throws
+          // Cannot use import statement outside a module in this non-module scope.
+          var compiled = Babel.transform(source, { presets: [['react', { runtime: 'classic' }]] }).code;
+          // Expose hooks as locals so code that imported them (now stripped) still resolves.
+          var preamble = 'var { useState, useEffect, useRef, useMemo, useCallback, useContext, useReducer, useLayoutEffect, Fragment } = React;\\n';
+          // Run the generated code and hand back its App component.
+          var App = new Function('React', 'ReactDOM', preamble + compiled + '\\n; return typeof App !== "undefined" ? App : null;')(React, ReactDOM);
+          if (typeof App !== 'function') {
+            throw new Error('No function named "App" was found in the generated code.');
+          }
+          ReactDOM.createRoot(root).render(React.createElement(App));
+        } catch (err) {
+          showError('Failed to render', err);
+        }
+      })();
     </script>
   </body>
 </html>`;
+};
 
 const buildSystemPrompt = (currentCode) =>
   `You are a React component code generator. The user will describe UI changes they want.
