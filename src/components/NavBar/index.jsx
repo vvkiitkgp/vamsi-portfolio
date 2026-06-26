@@ -35,7 +35,8 @@ export const NavBar = () => {
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 60);
-      const line = 120; // active when a section's top crosses just below the nav
+      // Highlight a section once its top crosses ~40% down the viewport.
+      const line = window.innerHeight * 0.4;
       let current = 'home';
       for (const id of ['skills', 'experience', 'projects']) {
         const el = document.getElementById(id);
@@ -44,8 +45,12 @@ export const NavBar = () => {
       setActiveSection(current);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, []);
 
   const goTo = (item) => {

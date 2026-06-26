@@ -6,6 +6,7 @@ import NavBar from '../../components/NavBar';
 import ProjectCard from '../../components/ProjectCard';
 import SkillsSection from '../../components/SkillsSection';
 import ExperienceSection from '../../components/ExperienceSection';
+import ProjectsSectionIntro from '../../components/ProjectsSectionIntro';
 import Fotter from '../../components/Fotter';
 import { useProjects } from '../../hooks/useProjects';
 
@@ -79,27 +80,29 @@ export const Home = () => {
           <ExperienceSection />
         </Box>
 
-        {loading ? (
-          <Box sx={{ px: { xs: 2, sm: '10%' } }}>
-            <Skeleton variant="text" width={220} sx={{ fontSize: '1.6rem', mb: 3 }} />
-            <Grid container spacing={3.5}>
-              <CardSkeleton />
-              <CardSkeleton />
-              <CardSkeleton />
-            </Grid>
-          </Box>
-        ) : (
-          <Box id="projects" sx={{ scrollMarginTop: 80, display: 'flex', flexDirection: 'column', gap: { xs: 4, sm: 5 } }}>
-            {SECTIONS.map(({ key, heading }) =>
+        <Box id="projects" sx={{ scrollMarginTop: 80, display: 'flex', flexDirection: 'column', gap: { xs: 4, sm: 5 } }}>
+          <ProjectsSectionIntro />
+
+          {loading ? (
+            <Box sx={{ px: { xs: 2, sm: '10%' } }}>
+              <Skeleton variant="text" width={220} sx={{ fontSize: '1.6rem', mb: 3 }} />
+              <Grid container spacing={3.5}>
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+              </Grid>
+            </Box>
+          ) : (
+            SECTIONS.map(({ key, heading }) =>
               data?.[key]?.length > 0 ? (
                 <Box key={key}>
                   <HomePageSectionHeading heading={heading} />
                   <ProjectGrid projects={data[key]} />
                 </Box>
               ) : null
-            )}
-          </Box>
-        )}
+            )
+          )}
+        </Box>
       </Box>
 
       {/* ── Footer — sits above the hero in the scroll stack ── */}
