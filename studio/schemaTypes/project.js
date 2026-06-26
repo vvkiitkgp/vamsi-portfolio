@@ -62,6 +62,14 @@ export const project = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+    defineField({
+      name: 'techStack',
+      title: 'Tech Stack',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'e.g. React, TypeScript, Supabase — shown as logo tags on the card.',
+      options: { layout: 'tags' },
+    }),
   ],
   preview: {
     select: {

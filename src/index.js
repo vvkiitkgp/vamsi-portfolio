@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import AppRoutes from './routes';
-import { Fotter } from './components/Fotter';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './theme';
 import './App.css';
@@ -14,7 +13,6 @@ root.render(
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppRoutes />
-      <Fotter />
     </ThemeProvider>
   </React.StrictMode>
 );

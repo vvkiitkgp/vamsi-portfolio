@@ -1,11 +1,11 @@
 import React from 'react';
-import { Box, IconButton, Tooltip, Typography } from '@mui/material';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import DownloadIcon from '@mui/icons-material/Download';
+import { Box, IconButton, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useAboutMe } from '../hooks/useAboutMe';
 
 const FALLBACK_RESUME = '/March%202026%20V2%20Resume.pdf';
+const FONT = 'Inter, "SF Pro Text", "SF Pro Display", -apple-system, system-ui, sans-serif';
 
 const Resume = () => {
   const navigate = useNavigate();
@@ -15,86 +15,72 @@ const Resume = () => {
   return (
     <Box
       sx={{
-        width: '100%',
-        minHeight: '100vh',
-        backgroundColor: '#F9FAFB',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        pt: 4,
-        px: { xs: 1.5, sm: 3 },
-        pb: 6,
+        height: '100vh',
+        backgroundColor: '#F9FAFB',
+        overflow: 'hidden',
       }}
     >
-      <Typography
-        variant="h6"
-        sx={{
-          color: '#111827',
-          fontWeight: 700,
-          fontFamily:
-            'Inter, "SF Pro Text", "SF Pro Display", -apple-system, system-ui, sans-serif',
-          mb: 2,
-        }}
-      >
-        Resume
-      </Typography>
-
+      {/* Top bar */}
       <Box
         sx={{
-          width: '100%',
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
-          gap: 2,
+          alignItems: 'center',
+          gap: 1.5,
+          px: { xs: 2, sm: 3 },
+          py: 1.5,
+          backgroundColor: '#FFFFFF',
+          borderBottom: '1px solid #E5E7EB',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+          flexShrink: 0,
+          zIndex: 10,
         }}
       >
-        <Box
+        <IconButton
+          onClick={() => navigate('/')}
+          size="small"
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 1,
-            mt: 1,
+            backgroundColor: '#F3F4F6',
+            color: '#111827',
+            borderRadius: '10px',
+            '&:hover': { backgroundColor: '#E5E7EB' },
           }}
         >
-          <Tooltip title="Back" placement="left">
-            <IconButton
-              size="small"
-              onClick={() => navigate(-1)}
-              sx={{
-                border: '1px solid #E5E7EB',
-                backgroundColor: '#FFFFFF',
-                color: '#111827',
-                '&:hover': { backgroundColor: '#F3F4F6' },
-              }}
-            >
-              <ArrowBackIosNewIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Download" placement="left">
-            <IconButton
-              size="small"
-              component="a"
-              href={resumeSrc}
-              download
-              sx={{
-                border: '1px solid #E5E7EB',
-                backgroundColor: '#FFFFFF',
-                color: '#111827',
-                '&:hover': { backgroundColor: '#F3F4F6' },
-              }}
-            >
-              <DownloadIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-        </Box>
+          <ArrowBackIcon fontSize="small" />
+        </IconButton>
 
+        <Typography
+          sx={{
+            fontFamily: FONT,
+            fontSize: { xs: '0.85rem', sm: '0.95rem' },
+            fontWeight: 600,
+            color: '#111827',
+            letterSpacing: '-0.01em',
+          }}
+        >
+          Resume
+        </Typography>
+      </Box>
+
+      {/* PDF iframe */}
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          py: 3,
+          px: { xs: 1.5, sm: 3 },
+        }}
+      >
         <Box
           component="iframe"
           src={resumeSrc}
           title="Resume"
           sx={{
-            width: { xs: '100%', md: '50%' },
-            height: { xs: '80vh', md: '80vh' },
+            width: { xs: '100%', md: '98%' },
+            height: '85%',
             border: '1px solid #E5E7EB',
             borderRadius: '12px',
             boxShadow: '0 16px 36px rgba(0,0,0,0.08)',

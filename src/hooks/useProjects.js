@@ -11,7 +11,8 @@ const QUERY = `*[_type == "project"] | order(section asc, order asc) {
   order,
   path,
   externalUrl,
-  isDeveloped
+  isDeveloped,
+  techStack
 }`
 
 /**
@@ -25,6 +26,7 @@ function toCardData(doc) {
     path: doc.path || null,
     externalUrl: doc.externalUrl || null,
     isDeveloped: doc.isDeveloped ?? false,
+    techStack: doc.techStack || [],
   }
 }
 

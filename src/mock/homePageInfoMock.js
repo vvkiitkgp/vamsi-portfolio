@@ -12,6 +12,7 @@ export const homePageInfoMock = {
     imageUrl: '/AskAnything.png',
     path: '/ask-anything',
     isDeveloped: true,
+    techStack: ['React', 'OpenAI API', 'Node.js'],
   },
   aiDrivenWebapp: {
     heading: 'AI Driven Webapp',
@@ -19,6 +20,7 @@ export const homePageInfoMock = {
     imageUrl: null,
     path: '/ai-driven-webapp',
     isDeveloped: true,
+    techStack: ['React', 'OpenAI API', 'TypeScript'],
   },
   facebookClone: {
     heading: 'Facebook Clone',
@@ -50,6 +52,7 @@ export const homePageInfoMock = {
     imageUrl: '/HTMLConverter.png',
     path: '/html-converter',
     isDeveloped: true,
+    techStack: ['React', 'JavaScript', 'CSS3'],
   },
   reactForms: {
     heading: 'React Forms',
@@ -57,6 +60,7 @@ export const homePageInfoMock = {
     imageUrl: '/ClientForm.png',
     path: '/client-form',
     isDeveloped: true,
+    techStack: ['React', 'React Hook Form', 'Material UI'],
   },
   shoppingConcept: {
     heading: 'Shopping Concept',
@@ -64,6 +68,7 @@ export const homePageInfoMock = {
     imageUrl: '/Shopping-concept-screenshot.png',
     path: '/shopping-concept',
     isDeveloped: true,
+    techStack: ['React', 'Framer Motion', 'CSS3'],
   },
   scrollableTable: {
     heading: 'Scrollable Table',
@@ -71,6 +76,7 @@ export const homePageInfoMock = {
     imageUrl: '/ScrollableTable.png',
     path: '/scrollable-table',
     isDeveloped: true,
+    techStack: ['React', 'JavaScript', 'CSS3'],
   },
   jewelleryStore: {
     heading: 'Jewellery Store',
@@ -78,6 +84,7 @@ export const homePageInfoMock = {
     imageUrl: '/Ecommerce.png',
     path: '/jewellery-store',
     isDeveloped: true,
+    techStack: ['Next.js', 'Supabase', 'React', 'TypeScript'],
   },
 };
 
