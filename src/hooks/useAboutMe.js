@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { sanityClient, urlFor } from '../lib/sanityClient'
+import { optimizedImageUrl } from '../lib/sanityClient'
+import { fetchCached } from '../lib/sanityCache'
 
 const QUERY = `*[_type == "aboutMe"][0] {
   greeting,
@@ -38,8 +39,7 @@ export function useAboutMe() {
 
     let cancelled = false
 
-    sanityClient
-      ?.fetch(QUERY)
+    fetchCached(QUERY)
       .then((doc) => {
         if (!cancelled && doc) {
           setData({
@@ -51,7 +51,7 @@ export function useAboutMe() {
             location: doc.location || FALLBACK.location,
             subtitle: doc.subtitle || FALLBACK.subtitle,
             bio: doc.bio || FALLBACK.bio,
-            photoUrl: doc.photo ? urlFor(doc.photo).width(1200).url() : null,
+            photoUrl: doc.photo ? optimizedImageUrl(doc.photo, { width: 800 }) : null,
             resumeUrl: doc.resumeUrl || null,
           })
         }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { sanityClient, urlFor } from '../lib/sanityClient'
+import { optimizedImageUrl } from '../lib/sanityClient'
+import { fetchCached } from '../lib/sanityCache'
 import homePageInfoMock from '../mock/homePageInfoMock'
 
 const QUERY = `*[_type == "project"] | order(section asc, order asc) {
@@ -22,7 +23,7 @@ function toCardData(doc) {
   return {
     heading: doc.heading,
     info: doc.info,
-    imageUrl: doc.image ? urlFor(doc.image).width(800).url() : null,
+    imageUrl: doc.image ? optimizedImageUrl(doc.image, { width: 600 }) : null,
     path: doc.path || null,
     externalUrl: doc.externalUrl || null,
     isDeveloped: doc.isDeveloped ?? false,
@@ -78,8 +79,7 @@ export function useProjects() {
 
     let cancelled = false
 
-    sanityClient
-      ?.fetch(QUERY)
+    fetchCached(QUERY)
       .then((docs) => {
         if (!cancelled) {
           setData(groupBySection(docs))

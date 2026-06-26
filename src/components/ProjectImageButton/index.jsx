@@ -1,5 +1,4 @@
 import React from 'react';
-import investmentPortfolioApp from '../../assets/investment-portfolio-app.webp';
 import { Box } from '@mui/material';
 
 export const ProjectImageButton = () => {

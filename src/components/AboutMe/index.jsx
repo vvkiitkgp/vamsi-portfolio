@@ -1,6 +1,5 @@
 import { Box, Typography, Skeleton } from '@mui/material';
 import React from 'react';
-import vvkProfilePhoto from '../../assets/vvk_profile_photo.JPG';
 import DescriptionIcon from '@mui/icons-material/Description';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -20,7 +19,6 @@ const splitName = (name = '') => {
 export const AboutMe = () => {
   const navigate = useNavigate();
   const { data, loading } = useAboutMe();
-  const photoSrc = data.photoUrl || vvkProfilePhoto;
   const [firstName, restName] = splitName(data.name);
 
   const actionButtons = [
@@ -246,13 +244,15 @@ export const AboutMe = () => {
               },
             }}
           >
-            {loading ? (
+            {loading || !data.photoUrl ? (
               <Skeleton variant="rectangular" sx={{ width: '100%', aspectRatio: '4 / 5', bgcolor: 'rgba(0,0,0,0.08)' }} />
             ) : (
               <Box
                 component="img"
-                src={photoSrc}
+                src={data.photoUrl}
                 alt={data.name}
+                loading="eager"
+                decoding="async"
                 sx={{
                   width: '100%',
                   aspectRatio: '4 / 5',

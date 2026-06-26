@@ -17,3 +17,9 @@ const builder = projectId ? imageUrlBuilder(sanityClient) : null
 export function urlFor(source) {
   return builder ? builder.image(source) : null
 }
+
+/** Optimized Sanity CDN image URL (webp, sized for display). */
+export function optimizedImageUrl(source, { width = 800, quality = 85 } = {}) {
+  if (!source || !builder) return null
+  return builder.image(source).width(width).format('webp').quality(quality).url()
+}

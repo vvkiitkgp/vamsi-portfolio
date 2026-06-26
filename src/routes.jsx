@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Suspense, lazy, useEffect, useRef } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -7,20 +7,35 @@ import {
 } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Home from './containers/Home';
-import Home2 from './containers/Home2';
-import ClientForm from './apps/ClientForm';
-import HtmlConverter from './apps/HtmlConverter';
-import InstagramAlike from './apps/InstagramAlike';
-import ShoppingConcept from './apps/ShoppingConcept';
-import TodoList from './apps/TodoList';
-import Resume from './pages/Resume';
-import Contact from './pages/Contact';
-import AskAnything from './pages/AskAnything';
-import JewelleryStore from './pages/JewelleryStore';
-import ScrollableTable from './apps/ScrollableTable';
-import AiDrivenWebapp from './pages/AiDrivenWebapp';
-import SkillsUniverse from './pages/SkillsUniverse';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
+
+const Home2 = lazy(() => import('./containers/Home2'));
+const ClientForm = lazy(() => import('./apps/ClientForm'));
+const HtmlConverter = lazy(() => import('./apps/HtmlConverter'));
+const InstagramAlike = lazy(() => import('./apps/InstagramAlike'));
+const ShoppingConcept = lazy(() => import('./apps/ShoppingConcept'));
+const TodoList = lazy(() => import('./apps/TodoList'));
+const Resume = lazy(() => import('./pages/Resume'));
+const Contact = lazy(() => import('./pages/Contact'));
+const AskAnything = lazy(() => import('./pages/AskAnything'));
+const JewelleryStore = lazy(() => import('./pages/JewelleryStore'));
+const ScrollableTable = lazy(() => import('./apps/ScrollableTable'));
+const AiDrivenWebapp = lazy(() => import('./pages/AiDrivenWebapp'));
+const SkillsUniverse = lazy(() => import('./pages/SkillsUniverse'));
+
+const PageFallback = () => (
+  <Box
+    sx={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      bgcolor: '#fff',
+    }}
+  >
+    <CircularProgress size={32} sx={{ color: '#630dff' }} />
+  </Box>
+);
 
 /**
  * Slide direction: navigating to Home is "back" (page slides right, Home enters
@@ -86,22 +101,24 @@ function AnimatedRoutes() {
           transformTemplate={flattenRestTransform}
           style={{ width: '100%' }}
         >
-          <Routes location={location}>
-            <Route path="/" element={<Home />} />
-            <Route path="/home2" element={<Home2 />} />
-            <Route path="/client-form" element={<ClientForm />} />
-            <Route path="/html-converter" element={<HtmlConverter />} />
-            <Route path="/instagram-alike" element={<InstagramAlike />} />
-            <Route path="/shopping-concept" element={<ShoppingConcept />} />
-            <Route path="/todo-list" element={<TodoList />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/ask-anything" element={<AskAnything />} />
-            <Route path="/jewellery-store" element={<JewelleryStore />} />
-            <Route path="/scrollable-table" element={<ScrollableTable />} />
-            <Route path="/ai-driven-webapp" element={<AiDrivenWebapp />} />
-            <Route path="/skills-universe" element={<SkillsUniverse />} />
-          </Routes>
+          <Suspense fallback={<PageFallback />}>
+            <Routes location={location}>
+              <Route path="/" element={<Home />} />
+              <Route path="/home2" element={<Home2 />} />
+              <Route path="/client-form" element={<ClientForm />} />
+              <Route path="/html-converter" element={<HtmlConverter />} />
+              <Route path="/instagram-alike" element={<InstagramAlike />} />
+              <Route path="/shopping-concept" element={<ShoppingConcept />} />
+              <Route path="/todo-list" element={<TodoList />} />
+              <Route path="/resume" element={<Resume />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/ask-anything" element={<AskAnything />} />
+              <Route path="/jewellery-store" element={<JewelleryStore />} />
+              <Route path="/scrollable-table" element={<ScrollableTable />} />
+              <Route path="/ai-driven-webapp" element={<AiDrivenWebapp />} />
+              <Route path="/skills-universe" element={<SkillsUniverse />} />
+            </Routes>
+          </Suspense>
         </motion.div>
       </AnimatePresence>
     </Box>

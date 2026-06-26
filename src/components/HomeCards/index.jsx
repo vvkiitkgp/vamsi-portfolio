@@ -2,15 +2,14 @@ import React from 'react';
 import {
   Box,
   Typography,
-  Card,
-  CardContent,
-  CardActionArea,
-  ImageList,
 } from '@mui/material';
-import vvkProfilePhoto from '../../assets/vvk_profile_photo.JPG';
 import { motion } from 'framer-motion';
+import { useAboutMe } from '../../hooks/useAboutMe';
 
 const HomeCards = () => {
+  const { data } = useAboutMe();
+  const backgroundImage = data.photoUrl ? `url(${data.photoUrl})` : undefined;
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Box
@@ -21,9 +20,11 @@ const HomeCards = () => {
           width: '40%',
           position: 'absolute',
           zIndex: 4,
-          backgroundImage: `url(${vvkProfilePhoto})`,
-          backgroundSize: 'cover', // optional: adjust as needed
-          backgroundPosition: 'center', // optional: adjust as needed
+          ...(backgroundImage && {
+            backgroundImage,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }),
         }}
       />
       <motion.div

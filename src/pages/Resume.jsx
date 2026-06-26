@@ -1,16 +1,14 @@
 import React from 'react';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, Typography, Skeleton, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from 'react-router-dom';
 import { useAboutMe } from '../hooks/useAboutMe';
 
-const FALLBACK_RESUME = '/March%202026%20V2%20Resume.pdf';
 const FONT = 'Inter, "SF Pro Text", "SF Pro Display", -apple-system, system-ui, sans-serif';
 
 const Resume = () => {
   const navigate = useNavigate();
-  const { data } = useAboutMe();
-  const resumeSrc = data.resumeUrl || FALLBACK_RESUME;
+  const { data, loading } = useAboutMe();
 
   return (
     <Box
@@ -63,7 +61,7 @@ const Resume = () => {
         </Typography>
       </Box>
 
-      {/* PDF iframe */}
+      {/* PDF viewer */}
       <Box
         sx={{
           flex: 1,
@@ -74,19 +72,41 @@ const Resume = () => {
           px: { xs: 1.5, sm: 3 },
         }}
       >
-        <Box
-          component="iframe"
-          src={resumeSrc}
-          title="Resume"
-          sx={{
-            width: { xs: '100%', md: '98%' },
-            height: '85%',
-            border: '1px solid #E5E7EB',
-            borderRadius: '12px',
-            boxShadow: '0 16px 36px rgba(0,0,0,0.08)',
-            backgroundColor: '#FFFFFF',
-          }}
-        />
+        {loading ? (
+          <Skeleton
+            variant="rectangular"
+            sx={{
+              width: { xs: '100%', md: '98%' },
+              height: '85%',
+              borderRadius: '12px',
+            }}
+          />
+        ) : data.resumeUrl ? (
+          <Box
+            component="iframe"
+            src={data.resumeUrl}
+            title="Resume"
+            sx={{
+              width: { xs: '100%', md: '98%' },
+              height: '85%',
+              border: '1px solid #E5E7EB',
+              borderRadius: '12px',
+              boxShadow: '0 16px 36px rgba(0,0,0,0.08)',
+              backgroundColor: '#FFFFFF',
+            }}
+          />
+        ) : (
+          <Typography
+            sx={{
+              fontFamily: FONT,
+              fontSize: '0.95rem',
+              color: '#6B7280',
+              textAlign: 'center',
+            }}
+          >
+            Resume is not available yet. Upload it in Sanity Studio.
+          </Typography>
+        )}
       </Box>
     </Box>
   );
