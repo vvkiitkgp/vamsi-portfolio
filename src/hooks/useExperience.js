@@ -3,10 +3,12 @@ import { optimizedImageUrl } from '../lib/sanityClient'
 import { fetchCached } from '../lib/sanityCache'
 import sigfigLogo from '../assets/experience/sigfig-logo.png'
 import standardCharteredLogo from '../assets/experience/standard-chartered-logo.png'
+import iitKharagpurLogo from '../assets/experience/iit-kharagpur-logo.png'
 
 const FALLBACK_LOGOS = {
   SigFig: sigfigLogo,
   'Standard Chartered Bank': standardCharteredLogo,
+  'IIT Kharagpur': iitKharagpurLogo,
 }
 
 const QUERY = `*[_type == "experience"][0] {
@@ -48,6 +50,14 @@ const FALLBACK = {
       logoUrl: standardCharteredLogo,
       totalDuration: '3 yrs',
       roles: [{ roleTitle: 'Development Architect', dateRange: 'Jun 2019 to Jun 2022' }],
+    },
+    {
+      companyName: 'IIT Kharagpur',
+      logoUrl: iitKharagpurLogo,
+      totalDuration: '4 yrs',
+      roles: [
+        { roleTitle: 'B.Tech · Manufacturing Science & Engineering', dateRange: '2015 to 2019' },
+      ],
     },
   ],
 }

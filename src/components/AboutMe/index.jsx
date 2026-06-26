@@ -85,7 +85,7 @@ export const AboutMe = () => {
           {/* Chips */}
           {!loading && (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {[`Based out of ${data.location}`, data.subtitle].map((chip) => (
+              {[`Based out of ${data.location}`, data.subtitle, 'IIT Kharagpur'].map((chip) => (
                 <Box
                   key={chip}
                   sx={{
