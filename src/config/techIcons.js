@@ -97,6 +97,8 @@ const TECH_ICONS = {
   // AI
   'OpenAI API': { Icon: SiOpenai, color: '#412991' },
   Claude: { Icon: SiClaude, color: '#D97757' },
+  'Claude Code': { Icon: SiClaude, color: '#D97757' },
+  'Anthropic API': { Icon: SiClaude, color: '#D97757' },
   'Cursor AI': { Icon: TbCode, color: '#111827' },
 };
 

@@ -4,8 +4,10 @@ import { fetchCached } from '../lib/sanityCache'
 import sigfigLogo from '../assets/experience/sigfig-logo.png'
 import standardCharteredLogo from '../assets/experience/standard-chartered-logo.png'
 import iitKharagpurLogo from '../assets/experience/iit-kharagpur-logo.png'
+import livilLogo from '../assets/experience/livil-logo.png'
 
 const FALLBACK_LOGOS = {
+  Livil: livilLogo,
   SigFig: sigfigLogo,
   'Standard Chartered Bank': standardCharteredLogo,
   'IIT Kharagpur': iitKharagpurLogo,
@@ -34,8 +36,16 @@ const FALLBACK = {
   headingAccent: 'building with intent',
   subHeading: 'Context over chronology',
   narrative:
-    'My path didn\u2019t follow a straight line \u2014 it deepened. At Standard Chartered, I learned what enterprise software actually demands: large-scale migrations, test coverage that earns trust, and shipping calmly inside regulated environments. At SigFig, that rigor met product velocity \u2014 leading teams, wiring LLM-powered features into production, and treating AI as a daily engineering tool rather than a slide-deck promise. Each stop taught me something the last one couldn\u2019t.',
+    'My path didn\u2019t follow a straight line \u2014 it deepened. At Standard Chartered, I learned what enterprise software actually demands: large-scale migrations, test coverage that earns trust, and shipping calmly inside regulated environments. At SigFig, that rigor met product velocity \u2014 leading teams, wiring LLM-powered features into production, and treating AI as a daily engineering tool rather than a slide-deck promise. Then I founded Livil and shipped it solo to Google Play \u2014 mobile, backend, realtime infra and release, built AI-first end-to-end. Each stop taught me something the last one couldn\u2019t.',
   companies: [
+    {
+      companyName: 'Livil',
+      logoUrl: livilLogo,
+      totalDuration: '2026 – Present',
+      roles: [
+        { roleTitle: 'Founder & Lead Engineer', dateRange: '2026 to Present' },
+      ],
+    },
     {
       companyName: 'SigFig',
       logoUrl: sigfigLogo,

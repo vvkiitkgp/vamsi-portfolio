@@ -18,12 +18,12 @@ const QUERY = `*[_type == "aboutMe"][0] {
 const FALLBACK = {
   greeting: 'hello!',
   name: 'Vamsi Vinay Kumar',
-  role: 'ui developer · react',
-  tagline: 'A frontend engineer who sweats the details',
-  accentLine: 'I USUALLY BUILD FROM CURIOSITY, FRUSTRATION & DETAIL.',
+  role: 'full-stack engineer · ai-first',
+  tagline: 'A full-stack engineer who ships products AI-first',
+  accentLine: 'I BUILD FAST, AI-FIRST, AND END-TO-END.',
   location: 'Hyderabad, India',
-  subtitle: 'Engineering @ SigFig · Ex-Standard Chartered',
-  bio: 'Senior Frontend Engineer with 6+ years in React, TypeScript & GraphQL. Started at Standard Chartered Bank architecting corporate banking migrations, then moved to SigFig leading teams that ship LLM-powered financial features. IIT Kharagpur grad — Cursor & Claude are my daily tools.',
+  subtitle: 'Founder @ Livil · Engineering @ SigFig',
+  bio: 'Senior engineer (6+ yrs · React · TypeScript · Node) who builds and ships end-to-end — frontend, backend and infra. I work AI-first: Claude & Claude Code are how I design schemas, write services and move fast. Founder of Livil, a real-time social-music app I architected and shipped solo to Google Play (44 releases). Ex-Standard Chartered, now @ SigFig shipping LLM-powered financial features. IIT Kharagpur.',
   photoUrl: null,
   resumeUrl: null,
 }

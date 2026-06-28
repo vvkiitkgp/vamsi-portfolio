@@ -7,6 +7,7 @@ import ProjectCard from '../../components/ProjectCard';
 import SkillsSection from '../../components/SkillsSection';
 import ExperienceSection from '../../components/ExperienceSection';
 import ProjectsSectionIntro from '../../components/ProjectsSectionIntro';
+import FeaturedProject from '../../components/FeaturedProject';
 import Fotter from '../../components/Fotter';
 import { useProjects } from '../../hooks/useProjects';
 
@@ -82,6 +83,8 @@ export const Home = () => {
 
         <Box id="projects" sx={{ scrollMarginTop: 80, display: 'flex', flexDirection: 'column', gap: { xs: 4, sm: 5 } }}>
           <ProjectsSectionIntro />
+
+          <FeaturedProject />
 
           {loading ? (
             <Box sx={{ px: { xs: 2, sm: '10%' } }}>

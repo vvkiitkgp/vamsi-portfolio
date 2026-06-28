@@ -22,6 +22,7 @@ const JewelleryStore = lazy(() => import('./pages/JewelleryStore'));
 const ScrollableTable = lazy(() => import('./apps/ScrollableTable'));
 const AiDrivenWebapp = lazy(() => import('./pages/AiDrivenWebapp'));
 const SkillsUniverse = lazy(() => import('./pages/SkillsUniverse'));
+const Livil = lazy(() => import('./pages/Livil'));
 
 const PageFallback = () => (
   <Box
@@ -117,6 +118,7 @@ function AnimatedRoutes() {
               <Route path="/scrollable-table" element={<ScrollableTable />} />
               <Route path="/ai-driven-webapp" element={<AiDrivenWebapp />} />
               <Route path="/skills-universe" element={<SkillsUniverse />} />
+              <Route path="/livil" element={<Livil />} />
             </Routes>
           </Suspense>
         </motion.div>
