@@ -107,6 +107,8 @@ Your rules — follow them strictly:
 - Do NOT include any import or require statements. React, useState, useEffect, and all React hooks are available globally via the React global (e.g. const { useState } = React;).
 - Do NOT include ReactDOM.render or ReactDOM.createRoot calls.
 - Use only inline styles for styling. No external CSS libraries.
+- In any string literal that contains an apostrophe (e.g. "I've", "don't"), use double quotes for that string or escape the apostrophe. Never let an apostrophe close a single-quoted string. Prefer double quotes for human-readable text.
+- Output complete, syntactically valid code. Do not truncate; close every bracket, brace, and string.
 - Build on top of the existing component below — don't start from scratch unless asked.
 
 Current component code:
@@ -137,7 +139,7 @@ const AiDrivenWebapp = () => {
 
       const msg = await client.messages.create({
         model: 'claude-sonnet-4-6',
-        max_tokens: 4096,
+        max_tokens: 8192,
         system: buildSystemPrompt(customAppCode),
         messages: [{ role: 'user', content: trimmed }],
       });
@@ -206,7 +208,11 @@ const AiDrivenWebapp = () => {
         {/* Chat input */}
         <TextField
           fullWidth
-          placeholder='e.g. "Add a counter button in the center of the page"'
+          placeholder={
+            isLoading
+              ? 'Generating your app — hang tight…'
+              : 'e.g. "Add a counter button in the center of the page"'
+          }
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
@@ -287,13 +293,74 @@ const AiDrivenWebapp = () => {
             </Typography>
           </Box>
 
-          <iframe
-            key={customAppCode}
-            title="live-preview"
-            srcDoc={buildSrcdoc(customAppCode)}
-            style={{ width: '100%', height: 500, border: 'none', display: 'block' }}
-            sandbox="allow-scripts"
-          />
+          <Box sx={{ position: 'relative' }}>
+            <iframe
+              key={customAppCode}
+              title="live-preview"
+              srcDoc={buildSrcdoc(customAppCode)}
+              style={{ width: '100%', height: 500, border: 'none', display: 'block' }}
+              sandbox="allow-scripts"
+            />
+
+            {/* ChatGPT-style "image creating" shimmer while the model generates */}
+            {isLoading && (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 2.5,
+                  // Sweeping diagonal highlight band over a soft grey base.
+                  background:
+                    'linear-gradient(110deg, #ECEFF3 8%, #F7F8FA 18%, #ECEFF3 33%)',
+                  backgroundSize: '200% 100%',
+                  animation: 'aiShimmer 1.4s ease-in-out infinite',
+                  '@keyframes aiShimmer': {
+                    '0%': { backgroundPosition: '150% 0' },
+                    '100%': { backgroundPosition: '-50% 0' },
+                  },
+                }}
+              >
+                {/* Pulsing square "canvas" being painted in */}
+                <Box
+                  sx={{
+                    width: 96,
+                    height: 96,
+                    borderRadius: '20px',
+                    background:
+                      'linear-gradient(135deg, #C7CDD6 0%, #E3E7EC 50%, #C7CDD6 100%)',
+                    backgroundSize: '200% 200%',
+                    animation: 'aiCanvas 1.8s ease-in-out infinite',
+                    boxShadow: '0 8px 28px rgba(17,24,39,0.10)',
+                    '@keyframes aiCanvas': {
+                      '0%, 100%': { backgroundPosition: '0% 50%', transform: 'scale(1)' },
+                      '50%': { backgroundPosition: '100% 50%', transform: 'scale(1.06)' },
+                    },
+                  }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: '#6B7280',
+                    fontWeight: 500,
+                    letterSpacing: '0.01em',
+                    fontFamily:
+                      'Inter, "SF Pro Text", -apple-system, system-ui, sans-serif',
+                    animation: 'aiText 1.6s ease-in-out infinite',
+                    '@keyframes aiText': {
+                      '0%, 100%': { opacity: 0.55 },
+                      '50%': { opacity: 1 },
+                    },
+                  }}
+                >
+                  Creating your app…
+                </Typography>
+              </Box>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>
